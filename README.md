@@ -70,8 +70,9 @@ green, conflicts red, …):
 
 ## Build & install locally
 
+Run from the repository root:
+
 ```bash
-cd fileinfo
 npm install
 npm run compile        # esbuild → out/extension.js
 npm test               # unit tests (pure functions)
@@ -80,16 +81,6 @@ code --install-extension showfilesize-1.0.0.vsix
 ```
 
 Reload the window after installing.
-
-## Publishing to the Marketplace
-
-1. Create a publisher at <https://marketplace.visualstudio.com/manage> (sign in with a Microsoft account); this repository publishes under the Publisher ID **`fenyu`**
-2. Create a Personal Access Token on Azure DevOps (<https://dev.azure.com>): Organization = **All accessible organizations**, Scopes = **Custom defined → Marketplace → Manage**
-3. `npx vsce login fenyu` (paste the PAT)
-4. `npx vsce package` → `fileinfo-<version>.vsix` (`repository` is already filled in, so no `--allow-missing-repository` is needed)
-5. `npx vsce publish` — or upload the `.vsix` on the manage page. The listing usually goes live within minutes; updates need a bumped `version` in `package.json` (and a matching `CHANGELOG.md` entry)
-
-Optional: also publish to [Open VSX](https://open-vsx.org) (`npx ovsx publish`) for VSCodium/theia users.
 
 ## Support
 
