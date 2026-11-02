@@ -86,4 +86,79 @@ if (banned.length === 0) {
 console.log(
   '\n' + (failures === 0 ? 'ALL PASS' : failures + ' FAIL') + ' — ' + entries.length + ' entries checked'
 );
+
+// ---------------------------------------------------------------------------
+// Marketplace manifest rules that `vsce package` does NOT enforce but the
+// upload endpoint rejects (learned the hard way: an invalid category string
+// only surfaced at upload time). Check them here so a bad package never
+// reaches the browser.
+// ---------------------------------------------------------------------------
+const manifestChecks = [];
+const push = (ok, label, detail) => {
+  manifestChecks.push({ ok, label, detail });
+  if (!ok) failures++;
+};
+
+let manifest = null;
+try {
+  const raw = execFileSync(tarExe, ['-xOf', vsix, 'extension/package.json'], {
+    encoding: 'utf8',
+    maxBuffer: 16 * 1024 * 1024,
+  });
+  manifest = JSON.parse(raw);
+} catch (err) {
+  push(false, 'manifest readable', err.message);
+}
+
+if (manifest) {
+  // Official enum from the extension manifest reference.
+  const VALID_CATEGORIES = new Set([
+    'Programming Languages', 'Snippets', 'Linters', 'Themes', 'Debuggers',
+    'Formatters', 'Keymaps', 'SCM Providers', 'Other', 'Extension Packs',
+    'Language Packs', 'Data Science', 'Machine Learning', 'Visualization',
+    'Notebooks', 'Education', 'Testing',
+  ]);
+  const cats = Array.isArray(manifest.categories) ? manifest.categories : [];
+  const badCats = cats.filter((c) => !VALID_CATEGORIES.has(c));
+  push(cats.length > 0 && badCats.length === 0, 'categories are valid Marketplace values',
+    badCats.length ? 'invalid: ' + badCats.join(', ') : cats.join(', '));
+
+  const ID_RE = /^[a-z0-9][a-z0-9-]*$/;
+  push(ID_RE.test(manifest.publisher ?? ''), 'publisher id format', manifest.publisher);
+  push(ID_RE.test(manifest.name ?? ''), 'extension name format', manifest.name);
+  push(/^\d+\.\d+\.\d+/.test(manifest.version ?? ''), 'version is semver', manifest.version);
+  push(Boolean(manifest.engines?.vscode), 'engines.vscode present', manifest.engines?.vscode);
+  push((manifest.keywords?.length ?? 0) <= 30, 'keywords <= 30', String(manifest.keywords?.length ?? 0));
+
+  // Declared entry points must actually ship in the archive.
+  const mainEntry = (manifest.main ?? '').replace(/^\.\//, '');
+  push(entries.includes(mainEntry), 'main entry ships in package', mainEntry);
+  const icon = manifest.icon;
+  if (icon) push(entries.includes(icon), 'icon ships in package', icon);
+
+  // Every %nlsKey% referenced by the manifest must resolve in the shipped nls file.
+  let nls = {};
+  try {
+    nls = JSON.parse(
+      execFileSync(tarExe, ['-xOf', vsix, 'extension/package.nls.json'], {
+        encoding: 'utf8',
+        maxBuffer: 16 * 1024 * 1024,
+      })
+    );
+  } catch {
+    /* nls optional: no file means no %refs% are allowed */
+  }
+  const refs = new Set([...JSON.stringify(manifest).matchAll(/%([\w.-]+)%/g)].map((m) => m[1]));
+  const unresolved = [...refs].filter((r) => !(r in nls));
+  push(unresolved.length === 0, 'nls references resolve', unresolved.length ? 'missing: ' + unresolved.join(', ') : `${refs.size} refs`);
+
+  console.log('');
+  for (const c of manifestChecks) {
+    console.log((c.ok ? 'PASS' : 'FAIL') + '  ' + c.label + (c.detail ? '  (' + c.detail + ')' : ''));
+  }
+}
+
+console.log(
+  '\n' + (failures === 0 ? 'ALL PASS' : failures + ' FAIL') + ' — ' + entries.length + ' entries checked'
+);
 process.exit(failures === 0 ? 0 : 1);
