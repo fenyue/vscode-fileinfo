@@ -9,18 +9,18 @@ First public release on the Marketplace.
 
 ### Added
 - **Size badge on every file** in the Explorer, packed into VSCode's hard
-  2-character badge cap — pick a style with `fileinfo.badge.format`:
+  2-character badge cap — pick a style with `showfilesize.badge.format`:
   `circled` enclosed numerals (`⑫K` = 12K), `keycap` emoji digits (`6️⃣K`,
   rendered large) or `wide` fullwidth digits (`６K`), with size-bucket
   coloring (green KB / yellow MB / red GB+) on by default.
 - **Git status letters** (`M`/`U`/`✓`) before the size, shown only where a
   git repository covers the path, in the same `gitDecoration.*` colors
-  vscode.git itself uses; `fileinfo.badge.gitStatus: "off"` removes them.
-- **File Sizes view** (opt-in, `fileinfo.view.enabled`) — the full size
+  vscode.git itself uses; `showfilesize.badge.gitStatus: "off"` removes them.
+- **File Sizes view** (opt-in, `showfilesize.view.enabled`) — the full size
   ("1.20 KB") per row at a glance: folders first with lazy recursive totals,
   files sorted by size descending. Badges are capped at 2 characters, so
   this tree is the only place full values are readable in one look.
-- **Optional folder sizes** (`fileinfo.folderSize.enabled`) — bounded
+- **Optional folder sizes** (`showfilesize.folderSize.enabled`) — bounded
   parallel walk (64-way I/O, 200k-entry cap, symlinks never followed) with
   an ignore list; folder rows render immediately and the total fills in
   progressively.
@@ -123,7 +123,7 @@ First public release on the Marketplace.
 ## [0.4.0] — 2026-10-31
 
 ### Added
-- `fileinfo.badge.format: emojiCircle` (new **default**) — ①️-⑳️ with variation
+- `showfilesize.badge.format: emojiCircle` (new **default**) — ①️-⑳️ with variation
   selector-16 switch to full **emoji presentation** (large colored circles on
   Windows/Chromium) while staying a single grapheme: `⑫️K` = 12K with the unit
   always visible, 1–20 per unit, emoji keycap pairs above. Answers "are there
@@ -144,11 +144,11 @@ First public release on the Marketplace.
 ## [0.3.0] — 2026-10-31
 
 ### Added
-- `fileinfo.badge.format: keycap` (new **default**) — emoji keycap digits 6️⃣K / 4️⃣2️⃣
+- `showfilesize.badge.format: keycap` (new **default**) — emoji keycap digits 6️⃣K / 4️⃣2️⃣
   render much larger than circled numerals. Legal within the badge cap because VSCode
   counts **grapheme clusters**, not characters: a keycap digit (digit+VS16+U+20E3) is a
   single UAX29 grapheme, verified end-to-end in a real extension host.
-- `fileinfo.badge.format: wide` — fullwidth digits ６K / ４２ as a monochrome alternative.
+- `showfilesize.badge.format: wide` — fullwidth digits ６K / ４２ as a monochrome alternative.
 
 ### Fixed
 - Badges for ≥99.5 PB of the top unit emitted a 3-grapheme string ("99P") that
@@ -164,16 +164,16 @@ First public release on the Marketplace.
 ## [0.2.0] — 2026-10-31
 
 ### Added
-- `fileinfo.badge.format: circled` — enclosed numerals pack unit + two digits into the
+- `showfilesize.badge.format: circled` — enclosed numerals pack unit + two digits into the
   2-codepoint badge cap: "⑫K" means 12K, "㊷M" means 42M (1–50 per unit; 51–99 falls back
   to plain digits). Removes the "42 = KB or MB?" ambiguity of the standard style.
-- `fileinfo.badge.colorBySize` — color encodes the size bucket at a glance:
+- `showfilesize.badge.colorBySize` — color encodes the size bucket at a glance:
   green < 1 MB, yellow = MBs, red = GB+ (overrides the fixed badge color).
 
 ## [0.1.1] — 2026-10-31
 
 ### Changed
-- The File Sizes view is now **opt-in** (`fileinfo.view.enabled`, default off) — the Explorer
+- The File Sizes view is now **opt-in** (`showfilesize.view.enabled`, default off) — the Explorer
   stays untouched unless you explicitly enable it. (Full-size text inside the built-in tree
   rows is impossible for any extension: VSCode caps decoration badges at 2 characters and
   offers no other inline-text API — verified against the official d.ts and the renderer
@@ -185,7 +185,7 @@ First public release on the Marketplace.
 - **File Sizes view** — a tree in the Explorer sidebar showing full sizes at a glance
   ("1.2 KB", "100 B") per row: folders first (lazy recursive totals), files sorted by
   size descending, click-to-open, realtime refresh via the existing watcher
-- `fileinfo.badge.color` — 9 color presets for the size badge (default: bright cyan;
+- `showfilesize.badge.color` — 9 color presets for the size badge (default: bright cyan;
   note VSCode applies a decoration's color to the file name as well)
 - Localization: hover tooltips, view title and settings descriptions in 中文/English,
   selected automatically from `vscode.env.language` (zh* → 中文, otherwise English)
