@@ -3,6 +3,17 @@
 All notable changes to this extension are documented in this file.
 Format follows [Keep a Changelog](https://keepachangelog.com/); versioning follows semver.
 
+## [1.0.1] — 2026-11-03
+
+Discoverability only — no behavior changes.
+
+### Changed
+- **Search keywords** expanded and now include the package name `showfilesize`,
+  so searching by package name finds the extension (the Marketplace indexes
+  the display name, description and keywords but not the package name).
+- **Description** rewritten to lead with the terms people actually search for
+  (`file size`, `Explorer`, `folder sizes`, `git status`).
+
 ## [1.0.0] — 2026-11-02
 
 First public release on the Marketplace.

@@ -1,8 +1,8 @@
 {
   "name": "showfilesize",
   "displayName": "File Info — Sizes in Explorer",
-  "description": "Show file sizes as badges in the Explorer tree, with detailed info (exact size, timestamps, attributes) on hover. Real-time updates, no persistent cache.",
-  "version": "1.0.0",
+  "description": "Show file size badges in the VS Code Explorer, plus a full-size File Sizes tree view, folder sizes and git status letters. Realtime updates, no persistent cache.",
+  "version": "1.0.1",
   "publisher": "fenyue",
   "repository": {
     "type": "git",
@@ -21,10 +21,15 @@
     "Other"
   ],
   "keywords": [
+    "showfilesize",
     "file size",
+    "file sizes",
+    "file size badge",
     "explorer",
     "folder size",
     "disk usage",
+    "file info",
+    "size viewer",
     "decoration"
   ],
   "activationEvents": [
