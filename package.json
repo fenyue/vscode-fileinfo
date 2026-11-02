@@ -1,0 +1,175 @@
+{
+  "name": "showfilesize",
+  "displayName": "File Info — Sizes in Explorer",
+  "description": "Show file sizes as badges in the Explorer tree, with detailed info (exact size, timestamps, attributes) on hover. Real-time updates, no persistent cache.",
+  "version": "1.0.0",
+  "publisher": "fenyu",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fenyue/vscode-fileinfo"
+  },
+  "license": "MIT",
+  "icon": "assets/icon.png",
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  },
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Other",
+    "File Explorers"
+  ],
+  "keywords": [
+    "file size",
+    "explorer",
+    "folder size",
+    "disk usage",
+    "decoration"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "%showfilesize.config.title%",
+      "properties": {
+        "showfilesize.badge.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "%showfilesize.badge.enabled.description%"
+        },
+        "showfilesize.badge.color": {
+          "type": "string",
+          "enum": [
+            "default",
+            "brightCyan",
+            "brightGreen",
+            "brightYellow",
+            "brightBlue",
+            "brightMagenta",
+            "orange",
+            "blue",
+            "purple"
+          ],
+          "default": "brightCyan",
+          "enumDescriptions": [
+            "%showfilesize.badge.color.default%",
+            "%showfilesize.badge.color.brightCyan%",
+            "%showfilesize.badge.color.brightGreen%",
+            "%showfilesize.badge.color.brightYellow%",
+            "%showfilesize.badge.color.brightBlue%",
+            "%showfilesize.badge.color.brightMagenta%",
+            "%showfilesize.badge.color.orange%",
+            "%showfilesize.badge.color.blue%",
+            "%showfilesize.badge.color.purple%"
+          ],
+          "description": "%showfilesize.badge.color.description%"
+        },
+        "showfilesize.badge.format": {
+          "type": "string",
+          "enum": [
+            "full",
+            "standard",
+            "circled",
+            "wide",
+            "keycap",
+            "emojiCircle"
+          ],
+          "default": "full",
+          "enumDescriptions": [
+            "%showfilesize.badge.format.full%",
+            "%showfilesize.badge.format.standard%",
+            "%showfilesize.badge.format.circled%",
+            "%showfilesize.badge.format.wide%",
+            "%showfilesize.badge.format.keycap%",
+            "%showfilesize.badge.format.emojiCircle%"
+          ],
+          "description": "%showfilesize.badge.format.description%"
+        },
+        "showfilesize.badge.colorBySize": {
+          "type": "boolean",
+          "default": true,
+          "description": "%showfilesize.badge.colorBySize.description%"
+        },
+        "showfilesize.badge.gitStatus": {
+          "type": "string",
+          "enum": [
+            "all",
+            "changed",
+            "off"
+          ],
+          "default": "all",
+          "scope": "window",
+          "enumDescriptions": [
+            "%showfilesize.badge.gitStatus.all%",
+            "%showfilesize.badge.gitStatus.changed%",
+            "%showfilesize.badge.gitStatus.off%"
+          ],
+          "description": "%showfilesize.badge.gitStatus.description%"
+        },
+        "showfilesize.folderSize.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "%showfilesize.folderSize.enabled.description%"
+        },
+        "showfilesize.folderSize.ignore": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "node_modules",
+            ".git"
+          ],
+          "description": "%showfilesize.folderSize.ignore.description%"
+        },
+        "showfilesize.statusbar.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "%showfilesize.statusbar.enabled.description%"
+        },
+        "showfilesize.view.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "%showfilesize.view.enabled.description%"
+        }
+      }
+    },
+    "views": {
+      "explorer": [
+        {
+          "id": "showfilesize.sizes",
+          "name": "%showfilesize.view.name%",
+          "when": "config.showfilesize.view.enabled"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "showfilesize.diagnose",
+        "title": "%showfilesize.command.diagnose%"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "node esbuild.js --production",
+    "compile": "node esbuild.js",
+    "watch": "node esbuild.js --watch",
+    "typecheck": "tsc -p tsconfig.json",
+    "pretest": "tsc -p tsconfig.test.json",
+    "test": "node --test \"out-test/test/*.js\"",
+    "test:integration": "npm run compile && npm run pretest && node scripts/run-integration.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/vscode": "^1.75.0",
+    "@vscode/test-cli": "^0.0.15",
+    "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^3.0.0",
+    "esbuild": "^0.25.0",
+    "typescript": "^5.5.0"
+  }
+}
