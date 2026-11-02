@@ -3,7 +3,7 @@
   "displayName": "File Info — Sizes in Explorer",
   "description": "Show file sizes as badges in the Explorer tree, with detailed info (exact size, timestamps, attributes) on hover. Real-time updates, no persistent cache.",
   "version": "1.0.0",
-  "publisher": "fenyu",
+  "publisher": "fenyue",
   "repository": {
     "type": "git",
     "url": "https://github.com/fenyue/vscode-fileinfo"

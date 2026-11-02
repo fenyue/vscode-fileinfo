@@ -28,8 +28,8 @@ async function withTempFile(sizeBytes: number, fn: (file: string) => Promise<voi
 
 export async function run(): Promise<void> {
   // 1. installed (development host) and activates cleanly
-  const ext = vscode.extensions.getExtension('fenyu.showfilesize');
-  assert.ok(ext, 'extension fenyu.showfilesize not found in test host');
+  const ext = vscode.extensions.getExtension('fenyue.showfilesize');
+  assert.ok(ext, 'extension fenyue.showfilesize not found in test host');
   const api = (await ext.activate()) as {
     provider: { provideFileDecoration(uri: vscode.Uri): Promise<vscode.FileDecoration | undefined> };
     sizesTree: {

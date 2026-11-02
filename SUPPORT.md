@@ -48,8 +48,8 @@ Last resort: disable this extension in the Extensions view.
 
 ## Uninstall
 
-- Extensions view: search **fileinfo** → gear icon → **Uninstall**, then reload.
-- Command line: `code --uninstall-extension fenyu.showfilesize`
+- Extensions view: search **File Info** (or `showfilesize`) → gear icon → **Uninstall**, then reload.
+- Command line: `code --uninstall-extension fenyue.showfilesize`
 
 ## Feedback
 
@@ -82,8 +82,8 @@ GitLens 等装饰类扩展可能占用同一位置。通常无需卸载，按开
 `showfilesize.badge.gitStatus`（`"off"` = 不显示 git 字母）。
 兜底：扩展面板停用本扩展。
 
-**卸载**：扩展面板搜索 fileinfo → 齿轮 → Uninstall；或命令行
-`code --uninstall-extension fenyu.showfilesize`。
+**卸载**：扩展面板搜索 File Info（或 `showfilesize`）→ 齿轮 → Uninstall；或命令行
+`code --uninstall-extension fenyue.showfilesize`。
 
 **反馈**：[fenyuesupport@163.com](mailto:fenyuesupport@163.com)，请附 VSCode
 版本（帮助 → 关于）与复现步骤。
